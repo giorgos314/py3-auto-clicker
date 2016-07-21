@@ -14,7 +14,7 @@ def counter():
         """Prints the amount of Clicks per Second and resets the counter every second."""
 
         global cps
-        print("Clicks Per Second", cps)
+        print("Clicks Per Second {}  ".format(cps), end = "\r") #Two spaces needed after cps in order to avoid number overlapping
         cps = 0
         time.sleep(1)
 
