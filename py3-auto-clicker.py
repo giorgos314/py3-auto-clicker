@@ -6,6 +6,7 @@ import threading
 from threading import Thread
 
 cps = 0
+speed = 0.01 #Click per second modifier
 
 def counter():
 
@@ -21,6 +22,7 @@ def clicker():
     """Checks for keyboard combinations and handles clicking."""
 
     global cps
+    global speed
 
     while True:
 
@@ -32,7 +34,17 @@ def clicker():
                 win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,x,y,0,0)
                 win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,x,y,0,0)
                 cps += 1
-                time.sleep(0.01)
+                time.sleep(speed)
+
+                if win32api.GetAsyncKeyState(38) != 0 and win32api.GetAsyncKeyState(16) != 0 and speed > 0.005: #Check if Shift + Up is pressed
+                    speed -= 0.005
+                    cps = 0
+                    time.sleep(0.1)
+
+                if win32api.GetAsyncKeyState(40) != 0 and win32api.GetAsyncKeyState(16) != 0 and speed < 1: #Check if Shift + Down is pressed
+                    speed += 0.005
+                    cps = 0
+                    time.sleep(0.1)
 
                 if win32api.GetAsyncKeyState(87) != 0 and win32api.GetAsyncKeyState(16) != 0: #Check if Shift + W is pressed
                     break
